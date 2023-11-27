@@ -1,8 +1,8 @@
 
-import Contact from "../../pages/Contact/Contact.jsx/index.js";
-import ProductCard from "../../pages/Service/ProductCard.local";
-import Banner from "./Banner.local";
-import FAQ from "./FAQ.local";
+import Contact from "../../pages/Contact/Contact.jsx";
+import ProductCard from "../../pages/Service/ProductCard.jsx";
+import Banner from "./Banner.jsx";
+import FAQ from "./FAQ.jsx";
 import ReviewCard from "./Testimonials.jsx";
 
 
