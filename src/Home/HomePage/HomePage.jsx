@@ -1,7 +1,6 @@
 
 import Contact from "../../pages/Contact/Contact.jsx/index.js";
 import ProductCard from "../../pages/Service/ProductCard.local";
-import SignUp from "../../pages/SignUp/SignUp.local";
 import Banner from "./Banner.local";
 import FAQ from "./FAQ.local";
 import ReviewCard from "./Testimonials.jsx";
