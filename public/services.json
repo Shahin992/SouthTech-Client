@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "name": "Websites Design",
+      "image": "https://www.southtechgroup.com/wp-content/uploads/2021/09/Real-Estate.png",
+      "description": "We design clean and aesthetic web applications around users’ needs so that your audience spends more time on your website.",
+      "price": 99.00,
+      "button": "Get My Website UI/UX"
+    },
+    {
+      "id": 2,
+      "name": "Mobile Apps Design",
+      "image": "https://www.southtechgroup.com/wp-content/uploads/2021/11/Mobile_Apps_UI_UX-1024x676.png",
+      "description": "We design easy, striking and interactive yet functional mobile apps for Android and iOS devices that live up to the users’ experience.",
+      "price": 149.99,
+      "button": "Get My Mobile UI/UX"
+    },
+    {
+      "id": 3,
+      "name": "SaaS Design",
+      "image": "https://www.southtechgroup.com/wp-content/uploads/2021/09/SaaS-design.png",
+      "description": "We implement the best UX design practices to connect with your target audience and help make a successful SaaS product.",
+      "price": 129.99,
+      "button": "Get My SaaS UI/UX"
+    }
+  ]
+  
