@@ -1,11 +1,16 @@
 
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { AuthContext } from '../../Firebase/AuthProvider/AuthProvider';
+
 
 
 const drawerWidth = 240;
 
 const Dashboard = () => {
+  const {user,loading} = useContext(AuthContext)
+
   return (
     <div className='max-w-[1100px] mx-auto p-10' style={{ display: 'flex' }}>
       {/* Sidebar */}
@@ -25,13 +30,20 @@ const Dashboard = () => {
           src="https://www.southtechgroup.com/wp-content/uploads/2019/07/southtech-logo.svg"
           alt=""
           style={{ width: "120px" }}
-        />
+        />  
+
+        
           </ListItem>
-            <Link to="/dashboard/all-employees">
-            <ListItem >
-            <ListItemText primary="All Employees" />
-          </ListItem>
-            </Link>
+          
+          
+              <Link to="/dashboard/all-employees">
+              <ListItem >
+              <ListItemText primary="All Employees" />
+            </ListItem>
+              </Link>
+            
+          
+            
             <Link to="/dashboard/admin/all-employees">
             <ListItem >
             <ListItemText primary="All Employees Admin" />

@@ -6,8 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Firebase/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
-import loadAni from "../../assets/Animation - 1701033986992.json"
-import Lottie from "lottie-react";
+
 
 
 
@@ -46,9 +45,32 @@ const SignUp = () => {
     const info =  {verified, name,email,password,employeeRole,bank_account_no,salary,designation,image}
    
 
-  //   if (loading) {
-  //     return <div className="flex justify-center items-center"><Lottie animationData={loadAni}></Lottie></div>
-  // }
+  
+
+  if (password.length < 6) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Your Password should contain  at least 6 characters.",
+    });
+    return;
+  } else if (!/[A-Z]/.test(password)) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Your Password should contain  at least 1 Uppercase characters.",
+    });
+    return;
+  } else if (!/([@$!%*#?&])/.test(password)) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Your Password should contain  at least 1 Special characters.",
+    });
+    return;
+  }
+
+
 
     createUser(email, password)
           .then((result) => {

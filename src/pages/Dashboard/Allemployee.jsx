@@ -157,13 +157,13 @@ const verifytoggle = async (user) =>{
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-          {selectedUser && `Pay details for ${selectedUser.name}`}
+          {selectedUser && `Pay to ${selectedUser.name}`}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {selectedUser && `Salary: ${selectedUser.salary}`}
           </Typography>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-          {selectedUser && `Pay details for ${selectedUser.bank_account_no}`}
+          {selectedUser && `Pay on ${selectedUser.bank_account_no}`}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <Button

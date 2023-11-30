@@ -17,6 +17,10 @@ function createData(name, Email, Verified, Bank, Account, Salary, Pay, Details) 
   return { name, Email, Verified, Bank, Account, Salary, Pay, Details };
 }
 
+
+
+
+
 export default function BasictableAdmin() {
 //   const [users, setUsers] = useState([]);
 
@@ -55,6 +59,33 @@ const handlehr = (user) => {
             timer: 1500
           });}})
 }
+
+
+const handleDelete = (user) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: `"You want to fire Mr.${user.name}!"`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`http://localhost:5000/users/${user._id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.deletedCount > 0) {
+            Swal.fire("Deleted!", `"You fired Mr. ${user.name}.", "success"`);
+          }
+          refetch()
+        });
+    }
+  });
+};
 
 
   return (
@@ -114,6 +145,7 @@ const handlehr = (user) => {
              
               <TableCell>
                 <Button
+                onClick={()=>handleDelete(user)}
                   type="submit"
                   variant="contained"
                   color="primary"
