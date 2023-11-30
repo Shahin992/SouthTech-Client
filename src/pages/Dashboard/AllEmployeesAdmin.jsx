@@ -25,7 +25,7 @@ export default function BasictableAdmin() {
 //   const [users, setUsers] = useState([]);
 
 //   useEffect(() => {
-//     fetch('http://localhost:5000/users')
+//     fetch('https://south-tech-server.vercel.app/users')
 //       .then((res) => res.json())
 //       .then((data) => setUsers(data));
 //   }, []);
@@ -33,13 +33,13 @@ export default function BasictableAdmin() {
   const { data: users = [], refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-        const res = await axios.get('http://localhost:5000/users');
+        const res = await axios.get('https://south-tech-server.vercel.app/users');
         return res.data;
     }
 })
 
 const handlehr = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+    fetch(`https://south-tech-server.vercel.app/users/admin/${user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ const handleDelete = (user) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch(`http://localhost:5000/users/${user._id}`, {
+      fetch(`https://south-tech-server.vercel.app/users/${user._id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

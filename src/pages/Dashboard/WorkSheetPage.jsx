@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   FormControl,
   InputLabel,
@@ -12,22 +12,22 @@ import {
   TableCell,
   TableBody,
   Paper,
-} from '@mui/material';
+} from "@mui/material";
 
 const WorkSheetPage = () => {
-  const [selectedEmployee, setSelectedEmployee] = useState('');
-  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
   const [alldata, setAllData] = useState([]);
   const [Users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/worksheet')
+    fetch("https://south-tech-server.vercel.app/worksheet")
       .then((res) => res.json())
       .then((data) => setAllData(data));
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:5000/users')
+    fetch("https://south-tech-server.vercel.app/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
@@ -38,12 +38,16 @@ const WorkSheetPage = () => {
     let filteredData = alldata;
 
     if (selectedEmployee) {
-      filteredData = filteredData.filter((data) => data.userName === selectedEmployee);
+      filteredData = filteredData.filter(
+        (data) => data.userName === selectedEmployee
+      );
     }
 
     if (selectedMonth) {
-      const secmon = selectedMonth.split('-')[0];
-      filteredData = filteredData.filter((data) => data.date.split('-')[1] === secmon);
+      const secmon = selectedMonth.split("-")[0];
+      filteredData = filteredData.filter(
+        (data) => data.date.split("-")[1] === secmon
+      );
     }
 
     return filteredData;
@@ -52,10 +56,13 @@ const WorkSheetPage = () => {
   return (
     <div>
       <form>
-        <div className='flex justify-between items-center'>
-          <FormControl sx={{ marginRight: 2, width: '40%' }}>
+        <div className="flex justify-between items-center">
+          <FormControl sx={{ marginRight: 2, width: "40%" }}>
             <InputLabel>Employee</InputLabel>
-            <Select value={selectedEmployee} onChange={(e) => setSelectedEmployee(e.target.value)}>
+            <Select
+              value={selectedEmployee}
+              onChange={(e) => setSelectedEmployee(e.target.value)}
+            >
               <MenuItem value="">All Employees</MenuItem>
               {AllEmployeeNames.map((employeeName) => (
                 <MenuItem value={employeeName} key={employeeName}>
@@ -65,7 +72,7 @@ const WorkSheetPage = () => {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ marginRight: 2, width: '40%' }}>
+          <FormControl sx={{ marginRight: 2, width: "40%" }}>
             <InputLabel>Month</InputLabel>
             <Select
               value={selectedMonth}
@@ -73,18 +80,18 @@ const WorkSheetPage = () => {
             >
               <MenuItem value="">All Months</MenuItem>
               {[
-                '01-January',
-                '02-February',
-                '03-March',
-                '04-April',
-                '05-May',
-                '06-June',
-                '07-July',
-                '08-August',
-                '09-September',
-                '10-October',
-                '11-November',
-                '12-December',
+                "01-January",
+                "02-February",
+                "03-March",
+                "04-April",
+                "05-May",
+                "06-June",
+                "07-July",
+                "08-August",
+                "09-September",
+                "10-October",
+                "11-November",
+                "12-December",
               ].map((monthName, index) => (
                 <MenuItem value={monthName} key={index}>
                   {monthName}
@@ -99,9 +106,11 @@ const WorkSheetPage = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>Employee</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Work Description</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Employee</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>
+                Work Description
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

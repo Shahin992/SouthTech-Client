@@ -1,8 +1,39 @@
-# React + Vite
+# My SouthTech Website Live link
+# https://southtech-shahin.web.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Features of My Project
+-User Management:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    Create, edit, and delete user accounts.
+    Assign roles and permissions to users.
+
+
+- Dashboard:
+
+    Overview of the entire organization's statistics.
+    Quick access to important metrics.
+- Employee Information:
+
+    Maintain a comprehensive database of employee information.
+    Track employee profiles, skills, and qualifications.
+
+- Salary and Benefits:
+
+    Manage payroll.
+    Administer employee benefits.
+
+- Task Management:
+
+    View assigned tasks and projects.
+    Update task statuses.
+
+- Responsive Design:
+
+    Ensure the website is responsive to different devices (desktop, tablet, mobile).
+    Provide a seamless experience across various screen sizes. 
+- Map Integration:
+
+    Include maps and directions to the hotel.
+    Provide information on nearby attractions and points of interest.
+

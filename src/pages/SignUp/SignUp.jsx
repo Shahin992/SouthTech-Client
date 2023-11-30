@@ -1,5 +1,11 @@
-
- import { Button, Grid,  MenuItem, Select, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,132 +13,138 @@ import { AuthContext } from "../../Firebase/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
 
-
-
-
-
 const SignUp = () => {
   const { createUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  
-  
-  const [role, setRole] = useState('');
- 
+  const [role, setRole] = useState("");
+
   const handleRoleChange = (event) => {
     setRole(event.target.value);
   };
-  const handlesubmit = async (e) =>{
-   
+  const handlesubmit = async (e) => {
     e.preventDefault();
-    const formdata = e.target
-    const name = formdata.name.value
-    const email = formdata.email.value
-    const password = formdata.password.value
-    const employeeRole = role
-    const bank_account_no = formdata.bank_account_no.value
-    const salary = formdata.salary.value
-    const designation = formdata.designation.value
-    const verified = false
-    const photo = formdata.photo.files[0]
-    const formData = new FormData()
-    formData.append('image', photo);
-  const { data } = await axios.post(
-    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_APIIMGBB}`,
-    formData
-  )
-  const image = data.data.display_url
-    const info =  {verified, name,email,password,employeeRole,bank_account_no,salary,designation,image}
-   
+    const formdata = e.target;
+    const name = formdata.name.value;
+    const email = formdata.email.value;
+    const password = formdata.password.value;
+    const employeeRole = role;
+    const bank_account_no = formdata.bank_account_no.value;
+    const salary = formdata.salary.value;
+    const designation = formdata.designation.value;
+    const verified = false;
+    const photo = formdata.photo.files[0];
+    const formData = new FormData();
+    formData.append("image", photo);
+    const { data } = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_APIIMGBB}`,
+      formData
+    );
+    const image = data.data.display_url;
+    const info = {
+      verified,
+      name,
+      email,
+      password,
+      employeeRole,
+      bank_account_no,
+      salary,
+      designation,
+      image,
+    };
 
-  
-
-  if (password.length < 6) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Your Password should contain  at least 6 characters.",
-    });
-    return;
-  } else if (!/[A-Z]/.test(password)) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Your Password should contain  at least 1 Uppercase characters.",
-    });
-    return;
-  } else if (!/([@$!%*#?&])/.test(password)) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Your Password should contain  at least 1 Special characters.",
-    });
-    return;
-  }
-
-
+    if (password.length < 6) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Your Password should contain  at least 6 characters.",
+      });
+      return;
+    } else if (!/[A-Z]/.test(password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Your Password should contain  at least 1 Uppercase characters.",
+      });
+      return;
+    } else if (!/([@$!%*#?&])/.test(password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Your Password should contain  at least 1 Special characters.",
+      });
+      return;
+    }
 
     createUser(email, password)
-          .then((result) => {
-            console.log(result.user);
-            fetch("http://localhost:5000/users", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(info),
-            });
-    
-            Swal.fire("Good job!", "Account Created Successfully!", "success");
-    
-            updateProfile(result.user, {
-              displayName: name,
-              photoURL: image,
-            });
-    
-            navigate(location?.state ? location.state : "/");
-          })
-    
-          .catch((error) => {
-            const ErrorMessage = error.message;
-            console.log(ErrorMessage);
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-              footer: ErrorMessage,
-            })});
+      .then((result) => {
+        console.log(result.user);
+        fetch("https://south-tech-server.vercel.app/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(info),
+        });
 
+        Swal.fire("Good job!", "Account Created Successfully!", "success");
 
-  }
-  
- 
+        updateProfile(result.user, {
+          displayName: name,
+          photoURL: image,
+        });
 
-    return (
-      <Grid container sx={{ marginY: '40px' }} spacing={2} justifyContent="center" alignItems="center">
-      <Typography variant="h6" sx={
-            {   fontWeight: '700', 
-                fontSize: {
-                sm: '24px', 
-                md: '42px', 
-              },
-                display:'flex',
-                justifyContent: 'center',
-                alignItems:'center',
-                marginTop: '40px',
-                color:'#08193C'
+        navigate(location?.state ? location.state : "/");
+      })
 
-         }}>
+      .catch((error) => {
+        const ErrorMessage = error.message;
+        console.log(ErrorMessage);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: ErrorMessage,
+        });
+      });
+  };
+
+  return (
+    <Grid
+      container
+      sx={{ marginY: "40px" }}
+      spacing={2}
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: "700",
+          fontSize: {
+            sm: "24px",
+            md: "42px",
+          },
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "40px",
+          color: "#08193C",
+        }}
+      >
         Employee and HR Sign-Up for SouthTech
-          </Typography>
-     
-     
+      </Typography>
+
       <Grid item md={6}>
-        <img className="h-full" src="https://brainstation-23.com/wp-content/uploads/2023/04/Image-for-website-2-1024x533.png" alt="" />
+        <img
+          className="h-full"
+          src="https://brainstation-23.com/wp-content/uploads/2023/04/Image-for-website-2-1024x533.png"
+          alt=""
+        />
       </Grid>
-     
+
       <Grid item sm={12} md={6}>
-      <form onSubmit={handlesubmit} className="space-y-3">
+        <form onSubmit={handlesubmit} className="space-y-3">
           <div className="space-y-2">
             <TextField
               type="text"
@@ -167,8 +179,6 @@ const SignUp = () => {
               fullWidth
               sx={{ background: "white" }}
             />
-
-     
 
             <Select
               label="Select Role"
@@ -217,7 +227,13 @@ const SignUp = () => {
               sx={{ background: "white" }}
             />
 
-            <input required type="file" id="photo" name="photo" accept="image/*" />
+            <input
+              required
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+            />
           </div>
 
           <Button
@@ -235,26 +251,21 @@ const SignUp = () => {
           </Button>
           <Grid>
             <Typography>
-            <p className="mt-5 text-center ">
-            Already have an account?{" "}
-            <Link
-              className="text-2xl font-semibold hover:underline hover:text-accent"
-              to={"/login"}
-            >
-              Log in
-            </Link>{" "}
-          </p>
+              <p className="mt-5 text-center ">
+                Already have an account?{" "}
+                <Link
+                  className="text-2xl font-semibold hover:underline hover:text-accent"
+                  to={"/login"}
+                >
+                  Log in
+                </Link>{" "}
+              </p>
             </Typography>
           </Grid>
-
-
         </form>
       </Grid>
-
-      
-
     </Grid>
-    );
+  );
 };
 
 export default SignUp;

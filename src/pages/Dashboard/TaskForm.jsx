@@ -1,4 +1,4 @@
-import  { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -15,55 +15,50 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from '@mui/material';
-import { AuthContext } from '../../Firebase/AuthProvider/AuthProvider';
-import Swal from 'sweetalert2';
-import Lottie from 'lottie-react';
-import loadAni from '../../assets/Animation - 1701033986992.json'
+} from "@mui/material";
+import { AuthContext } from "../../Firebase/AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
+import Lottie from "lottie-react";
+import loadAni from "../../assets/Animation - 1701033986992.json";
 
-
-const options = ['Sales', 'Support', 'Content', 'Paper-work'];
+const options = ["Sales", "Support", "Content", "Paper-work"];
 
 const TaskForm = () => {
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState('');
-  const [hoursWorked, setHoursWorked] = useState('');
+  const [task, setTask] = useState("");
+  const [hoursWorked, setHoursWorked] = useState("");
   const [date, setDate] = useState(new Date());
 
-  const {user,loading} = useContext(AuthContext)
- 
-  
+  const { user, loading } = useContext(AuthContext);
+
   if (loading) {
-      return <div className="flex justify-center items-center"><Lottie animationData={loadAni}></Lottie></div>
+    return (
+      <div className="flex justify-center items-center">
+        <Lottie animationData={loadAni}></Lottie>
+      </div>
+    );
   }
 
-  const userEmail = user?.email
-  const userName = user?.displayName
-  
- 
-  
- 
+  const userEmail = user?.email;
+  const userName = user?.displayName;
 
   const handleSubmit = () => {
     const newTask = {
       task,
       hoursWorked,
-      date: date.toISOString().split('T')[0],
+      date: date.toISOString().split("T")[0],
       userEmail,
-      userName
+      userName,
     };
 
-  
     setTasks([newTask, ...tasks]);
 
-
-    
-    setTask('');
-    setHoursWorked('');
+    setTask("");
+    setHoursWorked("");
     setDate(new Date());
     console.log(newTask);
 
-    fetch("http://localhost:5000/worksheet", {
+    fetch("https://south-tech-server.vercel.app/worksheet", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +67,6 @@ const TaskForm = () => {
     });
 
     Swal.fire("Good job!", "Work Added Successfully!", "success");
-
   };
 
   return (
@@ -104,7 +98,7 @@ const TaskForm = () => {
             fullWidth
             type="date"
             label="Date"
-            value={date.toISOString().split('T')[0]}
+            value={date.toISOString().split("T")[0]}
             onChange={(e) => setDate(new Date(e.target.value))}
           />
         </Grid>
@@ -115,22 +109,23 @@ const TaskForm = () => {
         </Grid>
       </Grid>
 
-    
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{fontWeight:'bold'}}>Task</TableCell>
-              <TableCell sx={{fontWeight:'bold'}}>Hours Worked</TableCell>
-              <TableCell sx={{fontWeight:'bold'}}>Date</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Task</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Hours Worked</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {tasks.map((t, index) => (
               <TableRow key={index}>
-                <TableCell sx={{fontWeight:'medium'}}>{t.task}</TableCell>
-                <TableCell sx={{fontWeight:'medium'}}>{t.hoursWorked}</TableCell>
-                <TableCell sx={{fontWeight:'medium'}}>{t.date}</TableCell>
+                <TableCell sx={{ fontWeight: "medium" }}>{t.task}</TableCell>
+                <TableCell sx={{ fontWeight: "medium" }}>
+                  {t.hoursWorked}
+                </TableCell>
+                <TableCell sx={{ fontWeight: "medium" }}>{t.date}</TableCell>
               </TableRow>
             ))}
           </TableBody>
