@@ -34,6 +34,7 @@ const SignUp = () => {
     const bank_account_no = formdata.bank_account_no.value
     const salary = formdata.salary.value
     const designation = formdata.designation.value
+    const verified = false
     const photo = formdata.photo.files[0]
     const formData = new FormData()
     formData.append('image', photo);
@@ -42,8 +43,8 @@ const SignUp = () => {
     formData
   )
   const image = data.data.display_url
-    const info =  {name,email,password,employeeRole,bank_account_no,salary,designation,image}
-    console.log(info);
+    const info =  {verified, name,email,password,employeeRole,bank_account_no,salary,designation,image}
+   
 
   //   if (loading) {
   //     return <div className="flex justify-center items-center"><Lottie animationData={loadAni}></Lottie></div>
@@ -52,6 +53,13 @@ const SignUp = () => {
     createUser(email, password)
           .then((result) => {
             console.log(result.user);
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(info),
+            });
     
             Swal.fire("Good job!", "Account Created Successfully!", "success");
     
