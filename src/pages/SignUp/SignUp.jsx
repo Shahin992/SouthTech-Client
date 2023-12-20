@@ -26,7 +26,7 @@ const SignUp = () => {
     e.preventDefault();
     const formdata = e.target;
     const name = formdata.name.value;
-    const email = formdata.email.value;
+    const EmployeeEmail = formdata.email.value;
     const password = formdata.password.value;
     const employeeRole = role;
     const bank_account_no = formdata.bank_account_no.value;
@@ -44,7 +44,7 @@ const SignUp = () => {
     const info = {
       verified,
       name,
-      email,
+      EmployeeEmail,
       password,
       employeeRole,
       bank_account_no,
@@ -76,7 +76,7 @@ const SignUp = () => {
       return;
     }
 
-    createUser(email, password)
+    createUser(EmployeeEmail, password)
       .then((result) => {
         console.log(result.user);
         fetch("https://south-tech-server.vercel.app/users", {

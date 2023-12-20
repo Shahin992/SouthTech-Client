@@ -14,6 +14,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+const stripePromise = loadStripe(
+  "pk_test_51OHt5NHWLAZjqdUwt36xAfmhLVibuB7N1Iduxtgd6ww83sMqWCOs1C5iSUvpdMnZk2ofbocTYgyzyW62qH6PTJTX00diwtoyB1"
+);
+
 function createData(
   name,
   Email,
@@ -28,16 +37,17 @@ function createData(
 }
 
 export default function BasicTable() {
-  const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   // const {verify, setVerify} = useState(null);
   const [isVerified, setIsVerified] = useState(null);
 
-  useEffect(() => {
-    fetch("https://south-tech-server.vercel.app/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
-  }, []);
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axios.get("https://south-tech-server.vercel.app/users");
+      return res.data;
+    },
+  });
 
   //   const verifyToggle = async (user) => {
   //      setVerify(true)
@@ -80,6 +90,7 @@ export default function BasicTable() {
   };
 
   const [open, setOpen] = useState(false);
+
   const handleOpen = (user) => {
     setSelectedUser(user);
     setOpen(true);
@@ -90,15 +101,19 @@ export default function BasicTable() {
     const newverify = !isVerified;
     setIsVerified(newverify);
     console.log(user, newverify);
-    await fetch(`https://south-tech-server.vercel.app/users/${user._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ newverify }),
-    })
+    await fetch(
+      `https://south-tech-server.vercel.app/users/verify/${user._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newverify }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => console.log(data));
+    refetch();
   };
 
   return (
@@ -178,7 +193,15 @@ export default function BasicTable() {
                     >
                       {selectedUser && `Pay on ${selectedUser.bank_account_no}`}
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+
+                    {/* <Elements>
+                      <CheckoutForm stripe={stripePromise}></CheckoutForm>
+                    </Elements> */}
+                    {/* <PaymentMethod selectedUser={selectedUser}></PaymentMethod> */}
+                    <Elements stripe={stripePromise}>
+                      <CheckoutForm selectedUser={selectedUser} />
+                    </Elements>
+                    {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                       <Button
                         type="submit"
                         variant="contained"
@@ -192,7 +215,7 @@ export default function BasicTable() {
                       >
                         Pay
                       </Button>
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 </Modal>
               </TableCell>
